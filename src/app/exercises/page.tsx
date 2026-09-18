@@ -48,12 +48,29 @@ export default function ExercisesPage() {
     fetchExercises();
   };
 
+  const handleDelete = async (id: number) => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`http://localhost:3001/api/exercise/${id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!response.ok) {
+      alert("削除に失敗しました");
+      return;
+    }
+    fetchExercises();
+  };
+
   return (
     <div>
       <h1>種目一覧</h1>
       <ul>
         {exercises.map((exercise) => (
-          <li key={exercise.id}>{exercise.name}</li>
+          <li key={exercise.id}>
+            {exercise.name}
+            <button onClick={() => handleDelete(exercise.id)}>削除</button>
+          </li>
         ))}
       </ul>
       <input
