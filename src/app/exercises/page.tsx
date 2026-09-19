@@ -61,15 +61,44 @@ export default function ExercisesPage() {
     }
     fetchExercises();
   };
+// 編集
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editName, setEditName] = useState('');
 
+  const handleUpdate = async (id: number) => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`http:/localhost:3001/api/exercise/${id}`, {
+      method: "PUT",
+      headers: { Authorization: `Bearer ${token}`}
+    }) 
+  } 
+
+
+  
   return (
     <div>
       <h1>種目一覧</h1>
       <ul>
         {exercises.map((exercise) => (
           <li key={exercise.id}>
-            {exercise.name}
-            <button onClick={() => handleDelete(exercise.id)}>削除</button>
+            {editingId === exercise.id ? (
+              <>
+              <input
+                 value={editName}
+                 onChange={(e) => setEditName(e.target.value)} 
+                 />
+              <button onClick={() => handleUpdate(exercise.id)}>保存</button>
+              </>
+            ): (
+              <>
+              {exercise.name}
+              <button onClick={() => {
+                setEditingId(exercise.id);
+                setEditName(exercise.name);
+              }}>編集</button>
+              <button onClick={() => handleDelete(exercise.id)}>削除</button>
+              </>
+            )}
           </li>
         ))}
       </ul>
