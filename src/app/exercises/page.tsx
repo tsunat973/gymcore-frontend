@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 type Exercise = {
@@ -101,7 +101,7 @@ export default function ExercisesPage() {
               </>
             ) : (
               <>
-                {exercise.name}
+                <Link href={`/exercises/${exercise.id}`}>{exercise.name}</Link>
                 <button
                   onClick={() => {
                     setEditingId(exercise.id);
