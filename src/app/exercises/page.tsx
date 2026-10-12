@@ -21,6 +21,9 @@ export default function ExercisesPage() {
     });
 
     const data = await response.json();
+    if (!response.ok) {
+      return;
+    }
     setExercises(data);
   };
 
