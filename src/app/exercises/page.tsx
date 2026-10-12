@@ -51,6 +51,7 @@ export default function ExercisesPage() {
     fetchExercises();
   };
 
+  // 削除
   const handleDelete = async (id: number) => {
     const token = localStorage.getItem("token");
     const response = await fetch(`http://localhost:3001/api/exercise/${id}`, {
